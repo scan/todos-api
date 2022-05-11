@@ -4,11 +4,11 @@ use uuid::Uuid;
 
 #[derive(Debug, PartialEq, Eq, Clone, SimpleObject)]
 pub struct Note {
-    id: Uuid,
-    title: String,
-    content: Option<String>,
-    created_at: DateTime<Utc>,
-    modified_at: Option<DateTime<Utc>>,
+    pub id: Uuid,
+    pub title: String,
+    pub contents: Option<String>,
+    pub created_at: DateTime<Utc>,
+    pub modified_at: Option<DateTime<Utc>>,
 }
 
 impl Default for Note {
@@ -16,7 +16,7 @@ impl Default for Note {
         Self {
             id: Uuid::new_v4(),
             title: "".to_string(),
-            content: None,
+            contents: None,
             created_at: Utc::now(),
             modified_at: None,
         }
