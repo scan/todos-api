@@ -1,0 +1,19 @@
+[package]
+name = "todos-api"
+version = "0.1.0"
+edition = "2021"
+authors = ["Tom Streller <tom@streller.me>"]
+
+[dependencies]
+anyhow = "1.0.57"
+async-graphql = { version = "3.0.38", features = ["chrono", "uuid", "secrecy", "log"] }
+async-graphql-warp = "3.0.38"
+async-trait = "0.1.53"
+chrono = { version = "0.4.19", features = ["serde"] }
+dotenv = "0.15.0"
+log = "0.4.17"
+pretty_env_logger = "0.4.0"
+sqlx = { version = "0.5.13", features = ["runtime-tokio-rustls", "sqlite", "migrate", "uuid", "chrono"] }
+tokio = { version = "1.18.1", features = ["full"] }
+uuid = { version = "0.8.2", features = ["v4", "serde"] }
+warp = "0.3.2"
