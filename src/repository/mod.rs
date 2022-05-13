@@ -2,6 +2,8 @@ use sqlx::{migrate::Migrator, sqlite::SqlitePoolOptions, Pool, Sqlite};
 
 mod note;
 
+pub use note::NoteRepository;
+
 static MIGRATOR: Migrator = sqlx::migrate!();
 
 #[derive(Clone)]

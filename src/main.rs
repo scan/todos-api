@@ -13,7 +13,7 @@ async fn main() -> anyhow::Result<()> {
     let repo = repository::Repository::from_env().await?;
     repo.migrate().await?;
 
-    let schema = graphql::create_schema_with_context();
+    let schema = graphql::create_schema_with_context(repo);
     let routes = filter::all(&schema);
 
     warp::serve(routes).run(([0, 0, 0, 0], 8080)).await;
