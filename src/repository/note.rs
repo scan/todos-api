@@ -12,6 +12,8 @@ pub trait NoteRepository: Send + Sync + Clone + 'static {
 
     async fn get_note(&self, id: Uuid) -> anyhow::Result<Option<Note>>;
     async fn remove_note(&self, id: Uuid) -> anyhow::Result<()>;
+    async fn update_note(&self, id: Uuid, title: &str, content: Option<&str>)
+        -> anyhow::Result<()>;
 }
 
 #[async_trait]
@@ -87,6 +89,26 @@ WHERE id = ?
             r#"
 DELETE FROM notes WHERE id = ?
             "#,
+            id
+        )
+        .execute(&self.0)
+        .await?;
+
+        Ok(())
+    }
+
+    async fn update_note(
+        &self,
+        id: Uuid,
+        title: &str,
+        content: Option<&str>,
+    ) -> anyhow::Result<()> {
+        sqlx::query!(
+            r#"
+UPDATE notes SET title = ?, contents = ? WHERE id = ?
+            "#,
+            title,
+            content,
             id
         )
         .execute(&self.0)

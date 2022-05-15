@@ -1,10 +1,11 @@
+mod mutation;
 mod query;
 
-use async_graphql::{Context, EmptyMutation, EmptySubscription, Schema};
+use async_graphql::{Context, EmptySubscription, Schema};
 
 use crate::repository::Repository;
 
-pub type AppSchema = Schema<query::Query, EmptyMutation, EmptySubscription>;
+pub type AppSchema = Schema<query::Query, mutation::Mutation, EmptySubscription>;
 
 pub fn get_repo_from_ctx<'ctx>(ctx: &Context<'ctx>) -> anyhow::Result<&'ctx Repository> {
     ctx.data::<Repository>()
@@ -12,7 +13,7 @@ pub fn get_repo_from_ctx<'ctx>(ctx: &Context<'ctx>) -> anyhow::Result<&'ctx Repo
 }
 
 pub fn create_schema_with_context(repo: Repository) -> AppSchema {
-    Schema::build(query::Query, EmptyMutation, EmptySubscription)
+    Schema::build(query::Query, mutation::Mutation, EmptySubscription)
         .data(repo)
         .finish()
 }

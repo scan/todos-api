@@ -7,12 +7,20 @@ use crate::{model::Note, repository::NoteRepository};
 
 use super::get_repo_from_ctx;
 
+#[derive(Debug, Default, Clone, Copy)]
 pub struct Query;
 
 #[Object]
 impl Query {
     pub async fn version<'ctx>(&self, _ctx: &Context<'ctx>) -> &str {
         "0.0.1"
+    }
+
+    pub async fn note<'ctx>(&self, ctx: &Context<'ctx>, id: uuid::Uuid) -> anyhow::Result<Option<Note>> {
+        let repo = get_repo_from_ctx(ctx)?;
+        let note = repo.get_note(id).await?;
+
+        Ok(note)
     }
 
     pub async fn notes<'ctx>(
